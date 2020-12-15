@@ -189,6 +189,16 @@ h1 {
 
 }
 
+#main-article {
+    float: left;
+    width:500px;
+    padding-right: 20px;
+}
+
+#main-article ul {
+    padding: 15px;
+}
+
 h2 {
 
     font-weight: normal;
@@ -232,7 +242,6 @@ h3 a:hover {
 .topic-link {
 
     text-decoration: none;
-    /* color:#a91717; */
     border-left: 1px solid #CCCCCC;
     padding-left: 7px;
 
@@ -259,18 +268,6 @@ h3 a:hover {
 
 }
 
-#article-container {
-
-    float:left;
-    width:500px;
-    padding-right: 20px;
-
-}
-
-#article-container ul {
-    padding: 15px;
-}
-
 #main-article-image {
 
     width:500px;
@@ -294,9 +291,8 @@ h3 a:hover {
 
 #watch-listen {
 
-    margin-left:20px;
-    width:280px;
-    float:right;
+    width:745px;
+    float:left;
 }
 
 h4 {
@@ -308,7 +304,6 @@ h4 {
 
 .article-side-image {
 
-    float:left;
     width:90px;
     margin-right:10px;
 
@@ -331,10 +326,9 @@ h4 {
 
 .side-article {
 
-    float:right;
+    float:left;
     width:180px;
     position:relative;
-    top:-18px;
 }
 
 .no-border {
