@@ -304,8 +304,7 @@ h4 {
 
 .article-side-image {
 
-    width:90px;
-    margin-right:10px;
+    width:233;
 
 }
 
@@ -314,21 +313,33 @@ h4 {
     text-decoration: none;
     color:black;
     font-weight:bold;
-    font-size:18px;
+    font-size:16px;
 
 }
 
 .watch-listen-link:hover {
 
-    color:#1167a8;
+    color:steelblue;
+    text-decoration: underline;
 
 }
 
 .side-article {
 
     float:left;
-    width:180px;
-    position:relative;
+    width:233px;
+    height:320px;
+    margin: 0 15px 0 0;
+    font-size: 90%;
+}
+
+.summary-extra {
+    white-space: normal;
+    color: #5a5a5a;
+}
+
+.extra-line {
+    height: 70px;
 }
 
 .no-border {
