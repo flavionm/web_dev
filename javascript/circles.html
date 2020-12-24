@@ -1,0 +1,91 @@
+<html>
+
+<head>
+	<title>Circle filling</title>
+
+	<style>
+		#canvas {
+			outline: black 1px solid;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Circles</h1>
+	<canvas id="canvas" height="562" width="1000"></canvas>
+	<button id="button" onclick="start()">Start</button>
+
+	<script>
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		var circleArray = [];
+
+		const height = canvas.height;
+		const width = canvas.width;
+
+		function Point(x, y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		function Circle(center, r) {
+			this.center = center;
+			this.r = r;
+		}
+
+		function drawCircle(circle) {
+			context.beginPath();
+			context.arc(circle.center.x, circle.center.y, circle.r, 0, 2 * Math.PI);
+			context.stroke();
+		}
+
+		function randomPoint() {
+			var x = Math.floor(Math.random() * width);
+			var y = Math.floor(Math.random() * height);
+
+			return new Point(x, y);
+		}
+
+		function start() {
+			var button = document.getElementById("button");
+			button.innerHTML = "Stop";
+			button.onclick = stop;
+
+			const firstPoint = randomPoint();
+			console.log(firstPoint);
+			var maxRadius = firstPoint.y;
+			if ((height - firstPoint.y) < maxRadius)
+				maxRadius = height - firstPoint.y;
+			if (firstPoint.x < maxRadius)
+				maxRadius = firstPoint.x;
+			if ((width - firstPoint.x) < maxRadius)
+				maxRadius = width - firstPoint.x;
+			console.log(firstPoint.y);
+			console.log(height - firstPoint.y);
+			console.log(firstPoint.x);
+			console.log(width - firstPoint.x);
+			console.log(maxRadius);
+
+			const circle = new Circle(firstPoint, Math.floor(Math.random() * maxRadius));
+			console.log(circle);
+			drawCircle(circle);
+			// circleArray.push(circle);
+
+			// const random = randomPoint();
+			// const circle2 = new Circle(random, 10);
+			// console.log(circle2);
+			// drawCircle(circle2);
+		}
+
+		function stop() {
+			var button = document.getElementById("button");
+			button.innerHTML = "Start";
+			button.onclick = start;
+
+			context.clearRect(0, 0, width, height);
+		}
+
+	</script>
+</body>
+
+</html>
