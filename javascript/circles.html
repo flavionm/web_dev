@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -19,6 +20,7 @@
 		var canvas = document.getElementById("canvas");
 		var context = canvas.getContext("2d");
 		var circleArray = [];
+		var loop;
 
 		const height = canvas.height;
 		const width = canvas.width;
@@ -40,41 +42,82 @@
 		}
 
 		function randomPoint() {
-			var x = Math.floor(Math.random() * width);
-			var y = Math.floor(Math.random() * height);
+			var x = Math.random() * width;
+			var y = Math.random() * height;
 
 			return new Point(x, y);
 		}
 
+		function distanceFromEdge(point) {
+			var maxRadius = point.y;
+			if ((height - point.y) < maxRadius)
+				maxRadius = height - point.y;
+			if (point.x < maxRadius)
+				maxRadius = point.x;
+			if ((width - point.x) < maxRadius)
+				maxRadius = width - point.x;
+			return maxRadius;
+		}
+
+		function distanceFromCenter(point, center) {
+			var xDistance = Math.abs(point.x - center.x);
+			var yDistance = Math.abs(point.y - center.y);
+			return Math.sqrt(xDistance**2 + yDistance**2);
+		}
+
+		function distanceFromCircle(point, circle) {
+			var distance = distanceFromCenter(point, circle.center);
+			if (distance <= circle.r) {
+				return 0;
+			} else {
+				return distance - circle.r;
+			}
+		}
+
+		function possibleRadius(point, circleArray) {
+			var radius = distanceFromEdge(point);
+
+			for (var circle of circleArray) {
+				var distance = distanceFromCircle(point, circle);
+				if (distance == 0) {
+					return 0;
+				} else if (distance < radius) {
+					radius = distance;
+				}
+			}
+
+			return radius;
+		}
+
 		function start() {
+			context.clearRect(0, 0, width, height);
+
 			var button = document.getElementById("button");
 			button.innerHTML = "Stop";
 			button.onclick = stop;
 
-			const firstPoint = randomPoint();
+			var firstPoint = randomPoint();
 			console.log(firstPoint);
-			var maxRadius = firstPoint.y;
-			if ((height - firstPoint.y) < maxRadius)
-				maxRadius = height - firstPoint.y;
-			if (firstPoint.x < maxRadius)
-				maxRadius = firstPoint.x;
-			if ((width - firstPoint.x) < maxRadius)
-				maxRadius = width - firstPoint.x;
-			console.log(firstPoint.y);
-			console.log(height - firstPoint.y);
-			console.log(firstPoint.x);
-			console.log(width - firstPoint.x);
+			var maxRadius = distanceFromEdge(firstPoint);
 			console.log(maxRadius);
 
-			const circle = new Circle(firstPoint, Math.floor(Math.random() * maxRadius));
+			const circle = new Circle(firstPoint, Math.random() * maxRadius);
 			console.log(circle);
 			drawCircle(circle);
-			// circleArray.push(circle);
+			circleArray.push(circle);
 
-			// const random = randomPoint();
-			// const circle2 = new Circle(random, 10);
-			// console.log(circle2);
-			// drawCircle(circle2);
+			loop = setInterval(function() {
+				var random = randomPoint();
+				console.log(random);
+				var maxRadius = possibleRadius(random, circleArray);
+				console.log(maxRadius);
+				if (maxRadius > 0) {
+					var circle = new Circle(random, Math.random() * maxRadius);
+					console.log(circle);
+					drawCircle(circle);
+					circleArray.push(circle);
+				}
+			}, 33);
 		}
 
 		function stop() {
@@ -82,7 +125,7 @@
 			button.innerHTML = "Start";
 			button.onclick = start;
 
-			context.clearRect(0, 0, width, height);
+			clearInterval(loop);
 		}
 
 	</script>
